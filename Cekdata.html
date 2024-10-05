@@ -50,17 +50,17 @@
         <td>${peserta.ttl}</td>
         <td>${peserta.berat} kg</td>
         <td>${peserta.tinggi} cm</td>
-        <td>${peserta.kategori_Tanding}</td> 
-        <td>${peserta.kategori_seni}</td>
+        <td>${peserta.kategori1}</td> 
+        <td>${peserta.kategori2}</td>
       `;
     });
 
     // Fungsi cetak data
     document.getElementById('cetakData').addEventListener('click', function() {
-      let csvContent = "data:text/csv;charset=utf-8,No,Nama,Tinggi,Berat\n";
+      let csvContent = "data:text/csv;charset=utf-8,No,Nama,Ttl,Berat,Tinggi,Kategori1,Kategori2\n";
 
       pesertaList.forEach((peserta, index) => {
-        csvContent += `${index + 1},${peserta.nama},${peserta.tinggi},${peserta.berat}\n`;
+        csvContent += `${index + 1},${peserta.nama},${peserta.ttl},${peserta.berat},${peserta.tinggi},${peserta.kategori1},${peserta.kategori2},\n`;
       });
 
       let encodedUri = encodeURI(csvContent);
