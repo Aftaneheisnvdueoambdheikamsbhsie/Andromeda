@@ -1,24 +1,34 @@
 <?php
-include 'koneksi.php'; // Menghubungkan dengan file koneksi
+// Koneksi ke database
+$servername = "localhost";
+$username = "root"; // atau sesuai username Anda
+$password = ""; // atau sesuai password Anda
+$dbname = "Andromeda"; // nama database Anda
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Mengambil data dari form
-    $nama = $_POST['nama'];
-    $jk = $_POST['jk'];
-    $tb = $_POST['tb'];
-    $bb = $_POST['bb'];
-    $ttl = $_POST['ttl'];
-    $kategori = $_POST['kategori'];
+// Membuat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Menyimpan data ke database
-    $sql = "INSERT INTO peserta (nama, jk, tb, bb, ttl, kategori) VALUES ('$nama', '$jk', '$tb', '$bb', '$ttl', '$kategori')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Data berhasil disimpan!";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-$conn->close(); // Menutup koneksi
+// Ambil data dari form
+$name = $_POST['name'];
+$gender = $_POST['gender'];
+$height = $_POST['height'];
+$weight = $_POST['weight'];
+$birthdate = $_POST['birthdate'];
+$category = $_POST['category'];
+
+// Query untuk menyimpan data
+$sql = "INSERT INTO peserta (name, gender, height, weight, birthdate, category) VALUES ('$name', '$gender', '$height', '$weight', '$birthdate', '$category')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Pendaftaran berhasil!";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
 ?>
