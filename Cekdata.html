@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Cek Data Peserta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cek Data Peserta</title>
 </head>
 <body>
-  <header>
-    <img src="adm.png" alt="Logo">
-    <h1>Periksa Data Kontingen</h1>
-  </header>
+    <header>
+        <div class="logo">
+            <img src="adm.png" alt="Logo">
+        </div>
+        <h1>Cek Data Registrasi Peserta</h1>
+    </header>
 
-  <section id="cekDataSection">
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>TTL</th>
-          <th>Berat</th>
-          <th>Tinggi</th>
-          <th>Kategori Tanding</th>
-          <th>Kategori Seni</th>
-        </tr>
-      </thead>
-      <tbody id="pesertaTable">
-        <!-- Data peserta akan dimasukkan secara dinamis di sini -->
-      </tbody>
-    </table>
-  </section>
+    <main class="form-container">
+        <h2>Periksa Kembali Data Registrasi Anda</h2>
+        <button class="button" onclick="window.location.href='registrasi.html'">Periksa Sekarang</button>
 
-  <div class="buttons">
-    <button id="cetakData">Cetak Data</button>
-    <button id="cetakDiagramJadwal">Cetak Diagram Jadwal</button>
-  </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>JK</th>
+                    <th>TB</th>
+                    <th>BB</th>
+                    <th>TTL</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Include database connection file
+                include('database.php');
 
-  <script>
-    // Ambil data peserta dari localStorage
-    let pesertaList = JSON.parse(localStorage.getItem('pesertaList')) || [];
+                // Query to fetch data from the database
+                $query = "SELECT * FROM peserta";
+                $result = mysqli_query($conn, $query);
+                
+                // Check if there are results
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>
+                                <td>{$row['no']}</td>
+                                <td>{$row['nama']}</td>
+                                <td>{$row['jk']}</td>
+                                <td>{$row['tb']}</td>
+                                <td>{$row['bb']}</td>
+                                <td>{$row['ttl']}</td>
+                                <td>{$row['kategori']}</td>
+                                <td>
+                                    <button class='button' onclick='exportData({$row['id']})'>Cetak Data</button>
+                                    <button class='button' onclick='printDiagram({$row['id']})'>Cetak Diagram Jadwal</button>
+                                </td>
+                              </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8'>Tidak ada data peserta.</td></tr>";
+                }
 
-    // Tampilkan data peserta di tabel
-    let pesertaTable = document.getElementById('pesertaTable');
-    pesertaList.forEach((peserta, index) => {
-      let row = pesertaTable.insertRow();
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${peserta.nama}</td>
-        <td>${peserta.ttl}</td>
-        <td>${peserta.berat} kg</td>
-        <td>${peserta.tinggi} cm</td>
-        <td>${peserta.kategori1}</td> 
-        <td>${peserta.kategori2}</td>
-      `;
-    });
+                // Close the connection
+                mysqli_close($conn);
+                ?>
+            </tbody>
+        </table>
+        
+        <button class="back-button" onclick="window.location.href='home.html'">Kembali</button>
+    </main>
 
-    // Fungsi cetak data
-    document.getElementById('cetakData').addEventListener('click', function() {
-      let csvContent = "data:text/csv;charset=utf-8,No,Nama,Ttl,Berat,Tinggi,Kategori1,Kategori2\n";
+    <footer>
+        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    </footer>
 
-      pesertaList.forEach((peserta, index) => {
-        csvContent += `${index + 1},${peserta.nama},${peserta.ttl},${peserta.berat},${peserta.tinggi},${peserta.kategori1},${peserta.kategori2},\n`;
-      });
-
-      let encodedUri = encodeURI(csvContent);
-      let link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "data_peserta.csv");
-      document.body.appendChild(link); // Required for Firefox
-      link.click();
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
