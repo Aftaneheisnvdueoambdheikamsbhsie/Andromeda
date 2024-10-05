@@ -24,6 +24,7 @@ $result = $conn->query($sql); // Menjalankan query
         <table>
             <tr>
                 <th>ID</th>
+                <th>NO</th>
                 <th>Nama</th>
                 <th>Jenis Kelamin</th>
                 <th>Tinggi Badan</th>
@@ -38,6 +39,7 @@ $result = $conn->query($sql); // Menjalankan query
                 while($row = $result->fetch_assoc()) {
                     echo "<tr>
                         <td>" . $row["id"] . "</td>
+                        <td>" . $row["NO"] . "</td>
                         <td>" . $row["nama"] . "</td>
                         <td>" . $row["jk"] . "</td>
                         <td>" . $row["tb"] . "</td>
