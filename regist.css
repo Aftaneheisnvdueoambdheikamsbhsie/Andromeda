@@ -43,7 +43,7 @@ h1 {
 
 .form-group input,
 .form-group select {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
