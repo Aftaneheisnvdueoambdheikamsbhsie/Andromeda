@@ -15,36 +15,36 @@
     </header>
 
     <main class="form-container">
-        <form id="registration-form">
+        <form id="registration-form" action="proses_registrasi.php" method="POST">
             <div class="form-group">
                 <label for="name">Nama Lengkap:</label>
-                <input type="text" id="name" required>
+                <input type="text" id="name" name="nama" required>
             </div>
             <div class="form-group">
                 <label for="gender">Jenis Kelamin:</label>
-                <select id="gender" required>
-                    <option value="male">Laki-laki</option>
-                    <option value="female">Perempuan</option>
+                <select id="gender" name="jk" required>
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="height">Tinggi Badan (cm):</label>
-                <input type="number" id="height" required>
+                <input type="number" id="height" name="tb" required>
             </div>
             <div class="form-group">
                 <label for="weight">Berat Badan (kg):</label>
-                <input type="number" id="weight" required>
+                <input type="number" id="weight" name="bb" required>
             </div>
             <div class="form-group">
                 <label for="birthdate">Tanggal Lahir:</label>
-                <input type="date" id="birthdate" required>
+                <input type="date" id="birthdate" name="ttl" required>
             </div>
             <div class="form-group">
                 <label for="category">Kategori:</label>
-                <select id="category" required>
-                    <option value="category1">Kategori Tanding</option>
-                    <option value="category2">Kategori Seni </option>
-                    <!-- Add more categories as needed -->
+                <select id="category" name="kategori" required>
+                    <option value="kategori_tanding">Kategori Tanding</option>
+                    <option value="kategori_seni">Kategori Seni</option>
+                    <!-- Tambahkan lebih banyak kategori sesuai kebutuhan -->
                 </select>
             </div>
             <button type="submit" class="button">Daftar</button>
