@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Cek Data Peserta</title>
+</head>
+<body>
+  <header>
+    <img src="adm.png" alt="Logo">
+    <h1>Periksa Data Kontingen</h1>
+  </header>
+
+  <section id="cekDataSection">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>TTL</th>
+          <th>Berat</th>
+          <th>Tinggi</th>
+          <th>Kategori Tanding</th>
+          <th>Kategori Seni</th>
+        </tr>
+      </thead>
+      <tbody id="pesertaTable">
+        <!-- Data peserta akan dimasukkan secara dinamis di sini -->
+      </tbody>
+    </table>
+  </section>
+
+  <div class="buttons">
+    <button id="cetakData">Cetak Data</button>
+    <button id="cetakDiagramJadwal">Cetak Diagram Jadwal</button>
+  </div>
+
+  <script>
+    // Ambil data peserta dari localStorage
+    let pesertaList = JSON.parse(localStorage.getItem('pesertaList')) || [];
+
+    // Tampilkan data peserta di tabel
+    let pesertaTable = document.getElementById('pesertaTable');
+    pesertaList.forEach((peserta, index) => {
+      let row = pesertaTable.insertRow();
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${peserta.nama}</td>
+        <td>${peserta.ttl}</td>
+        <td>${peserta.berat} kg</td>
+        <td>${peserta.tinggi} cm</td>
+        <td>${peserta.kategori_Tanding}</td> 
+        <td>${peserta.kategori_seni}</td>
+      `;
+    });
+
+    // Fungsi cetak data
+    document.getElementById('cetakData').addEventListener('click', function() {
+      let csvContent = "data:text/csv;charset=utf-8,No,Nama,Tinggi,Berat\n";
+
+      pesertaList.forEach((peserta, index) => {
+        csvContent += `${index + 1},${peserta.nama},${peserta.tinggi},${peserta.berat}\n`;
+      });
+
+      let encodedUri = encodeURI(csvContent);
+      let link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "data_peserta.csv");
+      document.body.appendChild(link); // Required for Firefox
+      link.click();
+    });
+  </script>
+</body>
+</html>
