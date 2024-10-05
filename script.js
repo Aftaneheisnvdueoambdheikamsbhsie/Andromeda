@@ -13,4 +13,8 @@ function printDiagram(id) {
     alert('Printing diagram for ID: ' + id);
     // Add your print logic here
 }
+function saveData() {
+    // Setelah menyimpan data ke database, gunakan console.log
+    console.log("Data peserta berhasil disimpan!");
+}
 
