@@ -8,3 +8,8 @@ function toggleMenu() {
         navMenu.classList.add("nav-hidden");
     }
 }
+  const menu = document.getElementById('menu');
+  menu.classList.toggle('active');
+
+
+}
