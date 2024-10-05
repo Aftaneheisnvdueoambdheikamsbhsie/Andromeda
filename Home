@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesta Pencak Silat Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Event Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="check_data.html">Cek Data</a></li>
+                <li><a href="registration.html">Registrasi</a></li>
+                <li><a href="schedule.html">Jadwal</a></li>
+                <li><a href="live_schedule.html">Live Jadwal</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to Pesta Pencak Silat Registration</h1>
+        <a href="login.html" class="login-btn">Login</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    </footer>
+</body>
+</html>
