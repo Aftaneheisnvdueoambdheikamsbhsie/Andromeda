@@ -13,7 +13,8 @@ $birthdate = $_POST['birthdate'];
 $category = $_POST['category'];
 
 // Query untuk menyimpan data
-$sql = "INSERT INTO peserta (name, gender, height, weight, birthdate, category) VALUES ('$name', '$gender', '$height', '$weight', '$birthdate', '$category')";
+// Query untuk menyimpan data
+$sql = "INSERT INTO peserta (nama, jk, tb, bb, ttl, kategori) VALUES ('$name', '$gender', '$height', '$weight', '$birthdate', '$category')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Pendaftaran berhasil!";
