@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesta Pencak Silat</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Pesta Pencak Silat</title>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <img src="logo.png" alt="Event Logo" class="logo">
-        <h1>Pesta Pencak Silat Nasional</h1>
-        <div class="hamburger" onclick="toggleMenu()">
-            &#9776;
-        </div>
-        <nav id="navMenu" class="nav-hidden">
-            <ul>
-                <li><a href="registration.html">Registrasi</a></li>
-                <li><a href="live_schedule.html">Live Jadwal</a></li>
-                <li><a href="check_data.html">Cek Data</a></li>
-                <li><a href="partners.html">Partners</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+    <h1>Pesta Pencak Silat Nasional</h1>
+    <div class="hamburger" onclick="toggleMenu()">
+      &#9776;
+    </div>
+  </header>
 
-    <!-- Body -->
-    <main>
-        <h2>Welcome to the Pencak Silat Event</h2>
-        <p>Explore the latest schedules, register for the event, and check participant data.</p>
-        <div class="cta-buttons">
-            <a href="registration.html" class="cta-btn">Register Now</a>
-            <a href="live_schedule.html" class="cta-btn">Live Schedule</a>
-        </div>
-    </main>
+  <nav id="menu">
+    <ul>
+      <li><a href="#">Registrasi</a></li>
+      <li><a href="#">Live Jadwal</a></li>
+      <li><a href="#">Cek Data</a></li>
+      <li><a href="#">Partners</a></li>
+    </ul>
+  </nav>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
-        <p>Powered by Unindra | Contact: +62 852 1234 5678</p>
-    </footer>
+  <section class="content">
+    <h2>Welcome to the Pencak Silat Event</h2>
+    <p>Explore the latest schedules, register for the event, and check participant data.</p>
+    <a href="#" class="button">Register Now</a>
+    <a href="#" class="button">Live Schedule</a>
+  </section>
 
-    <script src="script.js"></script>
+  <footer>
+    <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    <p>Powered by Unindra | Contact: +62 852 5678</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
