@@ -1,17 +1,8 @@
 <?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "root"; // atau sesuai username Anda
-$password = ""; // atau sesuai password Anda
-$dbname = "Andromeda"; // nama database Anda
+include 'database.php'; // Menambahkan file koneksi database
 
 // Membuat koneksi
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = getConnection(); // Mengambil koneksi dari fungsi
 
 // Ambil data dari form
 $name = $_POST['name'];
@@ -30,5 +21,5 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$conn->close();
+$conn->close(); // Menutup koneksi
 ?>
