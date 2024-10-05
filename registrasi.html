@@ -1,74 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Form Registrasi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registrasi Peserta</title>
 </head>
 <body>
-  <header>
-    <h1>Registrasi Peserta</h1>
-  </header>
+    <header>
+        <div class="logo">
+            <img src="adm.png" alt="Logo">
+        </div>
+        <h1>Pendaftaran Peserta Pencak Silat</h1>
+    </header>
 
-  <form action="submit_registrasi.php" method="POST">
-  <label for="name">Nama:</label>
-  <input type="text" id="name" name="name" required><br>
+    <main class="form-container">
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="name">Nama Lengkap:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Jenis Kelamin:</label>
+                <select id="gender" required>
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="height">Tinggi Badan (cm):</label>
+                <input type="number" id="height" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Berat Badan (kg):</label>
+                <input type="number" id="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Tanggal Lahir:</label>
+                <input type="date" id="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Kategori:</label>
+                <select id="category" required>
+                    <option value="category1">Kategori Tanding</option>
+                    <option value="category2">Kategori Seni </option>
+                    <!-- Add more categories as needed -->
+                </select>
+            </div>
+            <button type="submit" class="button">Daftar</button>
+        </form>
+        <button class="back-button" onclick="window.location.href='index.html'">Kembali</button>
+    </main>
 
-  <label for="dob">Tanggal Lahir:</label>
-  <input type="date" id="dob" name="dob" required><br>
+    <footer>
+        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    </footer>
 
-  <label for="height">Tinggi Badan:</label>
-  <input type="number" id="height" name="height" required><br>
-
-  <label for="weight">Berat Badan:</label>
-  <input type="number" id="weight" name="weight" required><br>
-
-  <label for="category">Kategori Tanding:</label>
-  <input type="text" id="categoryTanding" name="category" required><br>
-
-  <label for="category">Kategori Seni :</label>
-  <input type="text" id="categorySeni" name="category" required><br>
-
-  <input type="submit" value="Submit">
-</form>
-
-
-  <script>
-    // Simpan data ke localStorage ketika formulir disubmit
-    document.getElementById('registrasiForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Mencegah form refresh halaman
-
-      let nama = document.getElementById('nama').value;
-      let ttl = document.getElementById('ttl').value;
-      let berat = document.getElementById('bb').value;
-      let tinggi= document.getElementById('tinggi').value;
-      let kategori_Tanding= document.getElementById('kategori_Tanding').value;
-      let kategori_Seni= document.getElementById('kategori_Seni').value;
-      
-      // Buat objek peserta
-      let peserta = {
-        nama: nama,
-        ttl:ttl,
-        berat: berat,
-        tinggi: tinggi,
-        kategori_Tanding:kategori_Tanding,
-        kategori_Seni: kategori_Seni
-        
-      };
-
-      // Ambil data sebelumnya dari localStorage
-      let pesertaList = JSON.parse(localStorage.getItem('pesertaList')) || [];
-
-      // Tambahkan data baru ke dalam array
-      pesertaList.push(peserta);
-
-      // Simpan kembali ke localStorage
-      localStorage.setItem('pesertaList', JSON.stringify(pesertaList));
-
-      // Redirect ke halaman cekdata.html
-      window.location.href = "cekdata.html";
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
