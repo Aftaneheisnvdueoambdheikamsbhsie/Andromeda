@@ -1,14 +1,18 @@
 <?php
-$host = 'localhost'; // Your database host
-$user = 'username'; // Your database username
-$pass = 'password'; // Your database password
-$dbname = 'database_name'; // Your database name
+function getConnection() {
+    $servername = "localhost";
+    $username = "root"; // Sesuaikan dengan username Anda
+    $password = ""; // Sesuaikan dengan password Anda
+    $dbname = "andromeda"; // Nama database Anda
 
-// Create connection
-$conn = mysqli_connect($host, $user, $pass, $dbname);
+    // Membuat koneksi
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    // Cek koneksi
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
 ?>
