@@ -93,7 +93,15 @@ nav ul li:hover {
 .button:hover {
   background-color: #ff7a18;
 }
-
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
 
 @media (max-width: 768px) {
   .hamburger {
@@ -108,12 +116,4 @@ nav ul li:hover {
     left: 0;
   }
 }
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
+
