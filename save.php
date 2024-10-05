@@ -1,26 +1,27 @@
 <?php
-include 'database.php'; // Menambahkan file koneksi database
+include 'database.php';
+$conn = getConnection();
 
-// Membuat koneksi
-$conn = getConnection(); // Mengambil koneksi dari fungsi
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ambil data dari form
+    $nama = $_POST['name'];
+    $gender = $_POST['gender'];
+    $height = $_POST['height'];
+    $weight = $_POST['weight'];
+    $birthdate = $_POST['birthdate'];
+    $category = $_POST['category'];
 
-// Ambil data dari form
-$name = $_POST['name'];
-$gender = $_POST['gender'];
-$height = $_POST['height'];
-$weight = $_POST['weight'];
-$birthdate = $_POST['birthdate'];
-$category = $_POST['category'];
+    // Simpan data ke database
+    $sql = "INSERT INTO peserta (nama, jk, tb, bb, ttl, kategori) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssiiis", $nama, $gender, $height, $weight, $birthdate, $category);
+    $stmt->execute();
 
-// Query untuk menyimpan data
-// Query untuk menyimpan data
-$sql = "INSERT INTO peserta (nama, jk, tb, bb, ttl, kategori) VALUES ('$name', '$gender', '$height', '$weight', '$birthdate', '$category')";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Pendaftaran berhasil!";
+    // Redirect atau tampilkan pesan sukses
+    header("Location: cekdata.html");
+    exit();
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    // Jika bukan POST, tampilkan error
+    echo "Method not allowed!";
 }
-
-$conn->close(); // Menutup koneksi
 ?>
