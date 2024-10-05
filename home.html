@@ -9,7 +9,10 @@
 <body>
     <header>
         <img src="logo.png" alt="Event Logo" class="logo">
-        <nav>
+        <div class="hamburger" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        <nav id="navMenu" class="nav-hidden">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="check_data.html">Cek Data</a></li>
@@ -28,5 +31,7 @@
     <footer>
         <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
