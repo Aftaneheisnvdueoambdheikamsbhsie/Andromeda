@@ -116,7 +116,13 @@ footer {
     left: 0;
   }
 }
-
+video {
+      width: 100%;
+      height: auto;
+      object-fit: cover; /* Menyesuaikan tampilan video */
+      position: relative;
+      z-index: -1; /* Agar tidak menghalangi elemen lainnya */
+    }
 .video-trailer {
   display: flex;
   justify-content: center;
