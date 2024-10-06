@@ -8,6 +8,8 @@
 body {
   background-color: #f4f4f4;
   color: #333;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 header {
@@ -95,7 +97,7 @@ nav ul li:hover {
 }
 footer {
     text-align: center;
-    padding: 10px;
+    padding: 10px 0;
     background-color: #333;
     color: white;
     position: relative;
@@ -127,5 +129,8 @@ video {
   .content {
       padding: 20px;
     }
+main {
+    flex: 1; 
+}
    
   
