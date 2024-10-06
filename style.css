@@ -117,3 +117,16 @@ footer {
   }
 }
 
+.video-trailer {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.video-trailer video {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
