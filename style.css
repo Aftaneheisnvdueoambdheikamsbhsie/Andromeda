@@ -118,16 +118,14 @@ footer {
   nav.active {
     left: 0;
   }
-  .content {
-      padding: 20px;
-    }
 }
 video {
       width: 100%;
       height: auto;
-      object-fit: cover; /* Menyesuaikan tampilan video */
-      position: relative;
-      z-index: -1; /* Agar tidak menghalangi elemen lainnya */
+      object-fit: cover; 
     }
-   /* Optional: Mengurangi padding atau margin di mobile untuk ruang lebih */
+  .content {
+      padding: 20px;
+    }
+   
   
