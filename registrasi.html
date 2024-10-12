@@ -5,42 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi Peserta</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Include Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
 </head>
 <body>
     <header>
-        <h1>Form Registrasi Peserta</h1>
+        <div class="logo">
+            <img src="logo.png" alt="Logo"> <!-- Ganti dengan URL logo Anda -->
+        </div>
+        <h1>Registrasi Peserta</h1>
     </header>
+    
     <main>
-        <form id="registration-form">
-            <label for="name">Nama:</label>
-            <input type="text" id="name" required>
-            <label for="gender">Jenis Kelamin:</label>
-            <select id="gender" required>
-                <option value="Laki-laki">Laki-laki</option>
-                <option value="Perempuan">Perempuan</option>
-            </select>
-            <label for="height">Tinggi Badan (cm):</label>
-            <input type="number" id="height" required>
-            <label for="weight">Berat Badan (kg):</label>
-            <input type="number" id="weight" required>
-            <label for="birthdate">Tanggal Lahir:</label>
-            <input type="date" id="birthdate" required>
-            <label for="category">Kategori:</label>
-            <select id="category" required>
-                <option value="Dewasa">Dewasa</option>
-                <option value="Remaja">Remaja</option>
-                <option value="Anak-anak">Anak-anak</option>
-            </select>
-            <button type="submit">Daftar</button>
+        <div class="form-container">
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="name">Nama:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Jenis Kelamin:</label>
+                    <select id="gender" required>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="height">Tinggi Badan (cm):</label>
+                    <input type="number" id="height" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Berat Badan (kg):</label>
+                    <input type="number" id="weight" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Tanggal Lahir:</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Kategori:</label>
+                    <select id="category" required>
+                        <option value="Dewasa">Dewasa</option>
+                        <option value="Remaja">Remaja</option>
+                        <option value="Anak-anak">Anak-anak</option>
+                    </select>
+                </div>
+                <button type="submit" class="button">Daftar</button>     
         </form>
         <button class="back-button" onclick="window.location.href='home.html'">Kembali</button>
         <button class="check-data-button" onclick="window.location.href='cekdata.html'">Cek Data</button>
              
         <div id="message" style="margin-top: 20px; display: none;"></div>
+        </div>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    </footer>
 
     <script>
         // Konfigurasi Firebase
@@ -61,9 +82,8 @@
         const messageDiv = document.getElementById('message');
 
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah form dari pengiriman default
+            event.preventDefault();
 
-            // Ambil data dari form
             const nama = document.getElementById('name').value;
             const jk = document.getElementById('gender').value;
             const tb = document.getElementById('height').value;
@@ -71,7 +91,6 @@
             const ttl = document.getElementById('birthdate').value;
             const kategori = document.getElementById('category').value;
 
-            // Simpan data ke Firebase
             firebase.database().ref('peserta/').push({
                 nama: nama,
                 jk: jk,
@@ -81,19 +100,15 @@
                 kategori: kategori
             })
             .then(() => {
-                // Tampilkan pesan sukses
                 messageDiv.style.display = 'block';
-                messageDiv.innerHTML = "Data berhasil disimpan! Apakah Anda ingin menginput data lagi? <button id='yes'>Ya</button> <button id='no'>Tidak</button>";
+                messageDiv.innerHTML = "Data berhasil disimpan! Apakah Anda ingin menginput data lagi? <button id='yes' class='back-button'>Ya</button> <button id='no' class='check-data-button'>Tidak</button>";
 
-                // Tambahkan event listener untuk tombol "Ya" dan "Tidak"
                 document.getElementById('yes').addEventListener('click', function() {
-                    // Reset form untuk input data baru
                     form.reset();
                     messageDiv.style.display = 'none';
                 });
 
                 document.getElementById('no').addEventListener('click', function() {
-                    // Redirect ke cekdata.html
                     window.location.href = 'cekdata.html';
                 });
             })
@@ -107,3 +122,4 @@
 </body>
 </html>
 
+  
