@@ -3,86 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="regist.css">
     <title>Registrasi Peserta</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="adm.png" alt="Logo">
-        </div>
-        <h1>Pendaftaran Peserta Pencak Silat</h1>
+        <h1>Form Registrasi Peserta</h1>
     </header>
-
-    <main class="form-container">
+    <main>
         <form id="registration-form">
-            <div class="form-group">
-                <label for="name">Nama Lengkap:</label>
-                <input type="text" id="name" name="nama" required>
-            </div>
-            <div class="form-group">
-                <label for="gender">Jenis Kelamin:</label>
-                <select id="gender" name="jk" required>
-                    <option value="L">Laki-laki</option>
-                    <option value="P">Perempuan</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="height">Tinggi Badan (cm):</label>
-                <input type="number" id="height" name="tb" required>
-            </div>
-            <div class="form-group">
-                <label for="weight">Berat Badan (kg):</label>
-                <input type="number" id="weight" name="bb" required>
-            </div>
-            <div class="form-group">
-                <label for="birthdate">Tanggal Lahir:</label>
-                <input type="date" id="birthdate" name="ttl" required>
-            </div>
-            <div class="form-group">
-                <label for="category">Kategori:</label>
-                <select id="category" name="kategori" required>
-                    <option value="kategori_tanding">Kategori Tanding</option>
-                    <option value="kategori_seni">Kategori Seni</option>
-                    <!-- Tambahkan lebih banyak kategori sesuai kebutuhan -->
-                </select>
-            </div>
-            <button type="submit" class="button">Daftar</button>
+            <label for="name">Nama:</label>
+            <input type="text" id="name" required>
+            <label for="gender">Jenis Kelamin:</label>
+            <select id="gender" required>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+            <label for="height">Tinggi Badan (cm):</label>
+            <input type="number" id="height" required>
+            <label for="weight">Berat Badan (kg):</label>
+            <input type="number" id="weight" required>
+            <label for="birthdate">Tanggal Lahir:</label>
+            <input type="date" id="birthdate" required>
+            <label for="category">Kategori:</label>
+            <select id="category" required>
+                <option value="Dewasa">Dewasa</option>
+                <option value="Remaja">Remaja</option>
+                <option value="Anak-anak">Anak-anak</option>
+            </select>
+            <button type="submit">Daftar</button>
         </form>
         <button class="back-button" onclick="window.location.href='home.html'">Kembali</button>
         <button class="check-data-button" onclick="window.location.href='cekdata.html'">Cek Data</button>
-        
+             
         <div id="message" style="margin-top: 20px; display: none;"></div>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
-    </footer>
-
-    <!-- Script Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
     <script>
-        // Firebase configuration
+        // Konfigurasi Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyB0PBtiwbVjUjia1edNbW0UZ0L84rfcLDo",
-            authDomain: "andromediadigital-ddcd0.firebaseapp.com",
-            projectId: "andromediadigital-ddcd0",
-            storageBucket: "andromediadigital-ddcd0.appspot.com",
-            messagingSenderId: "721176765748",
-            appId: "1:721176765748:web:yourAppId" // Ganti dengan appId yang sesuai
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
 
-        // Form submission
         const form = document.getElementById('registration-form');
-        form.addEventListener('submit', function (event) {
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', function(event) {
             event.preventDefault(); // Mencegah form dari pengiriman default
 
-            // Mengambil data dari form
+            // Ambil data dari form
             const nama = document.getElementById('name').value;
             const jk = document.getElementById('gender').value;
             const tb = document.getElementById('height').value;
@@ -90,8 +71,8 @@
             const ttl = document.getElementById('birthdate').value;
             const kategori = document.getElementById('category').value;
 
-            // Menyimpan data ke Firestore
-            db.collection("peserta").add({
+            // Simpan data ke Firebase
+            firebase.database().ref('peserta/').push({
                 nama: nama,
                 jk: jk,
                 tb: tb,
@@ -100,14 +81,29 @@
                 kategori: kategori
             })
             .then(() => {
-                alert("Pendaftaran berhasil!");
-                form.reset(); // Mengosongkan form setelah pendaftaran
+                // Tampilkan pesan sukses
+                messageDiv.style.display = 'block';
+                messageDiv.innerHTML = "Data berhasil disimpan! Apakah Anda ingin menginput data lagi? <button id='yes'>Ya</button> <button id='no'>Tidak</button>";
+
+                // Tambahkan event listener untuk tombol "Ya" dan "Tidak"
+                document.getElementById('yes').addEventListener('click', function() {
+                    // Reset form untuk input data baru
+                    form.reset();
+                    messageDiv.style.display = 'none';
+                });
+
+                document.getElementById('no').addEventListener('click', function() {
+                    // Redirect ke cekdata.html
+                    window.location.href = 'cekdata.html';
+                });
             })
             .catch((error) => {
-                console.error("Error adding document: ", error);
-                alert("Pendaftaran gagal, silakan coba lagi.");
+                console.error("Error saving data: ", error);
+                messageDiv.style.display = 'block';
+                messageDiv.innerHTML = "Terjadi kesalahan saat menyimpan data.";
             });
         });
     </script>
 </body>
 </html>
+
