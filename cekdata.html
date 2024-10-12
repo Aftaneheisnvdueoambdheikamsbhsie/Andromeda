@@ -42,21 +42,8 @@
         <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
     </footer>
 
+    <script src="fiirebase-config.js"></script>
     <script>
-        // Konfigurasi Firebase
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Inisialisasi Firebase
-        firebase.initializeApp(firebaseConfig);
-
         // Mengambil data dari Firebase
         firebase.database().ref('peserta/').once('value').then((snapshot) => {
             const dataList = document.getElementById('data-list');
