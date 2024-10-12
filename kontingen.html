@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kontingen</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script type="module" src="./firebase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="adm.png" alt="Logo"> <!-- Ganti dengan URL logo -->
+        </div>
+        <h1>Daftar Kontingen</h1>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Kontingen</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="kontingen-table-body">
+                <!-- Data dari Firebase akan ditampilkan di sini -->
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Firebase initialization sudah ada di firebase-config.js
+        import { db } from './firebase-config.js'; // Import Firebase db config
+        import { getDocs, collection } from "firebase/firestore";
+
+        // Fungsi untuk menampilkan data kontingen
+        async function fetchKontingenData() {
+            const kontingenTableBody = document.getElementById('kontingen-table-body');
+            const kontingenCollection = collection(db, "kontingen"); // Nama koleksi di Firebase
+
+            const snapshot = await getDocs(kontingenCollection);
+            let counter = 1;
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${counter++}</td>
+                    <td>${data.name}</td>
+                    <td>
+                        <button class="red-button">Cetak Data</button>
+                        <button class="blue-button">Cetak Diagram Jadwal</button>
+                    </td>
+                `;
+                kontingenTableBody.appendChild(row);
+            });
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        window.onload = fetchKontingenData;
+    </script>
+</body>
+</html>
