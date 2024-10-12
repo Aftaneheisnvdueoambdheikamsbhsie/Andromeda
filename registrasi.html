@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi Peserta</title>
     <link rel="stylesheet" href="regist.css">
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <!-- Import Firebase SDKs -->
+    <script type="module" src="./firebase-config.js"></script>
 </head>
 <body>
     <header>
@@ -63,8 +63,9 @@
         <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
     </footer>
 
-    <script src="firebase-config.js"></script>
-    <script>
+    <!-- Import Firebase database logic -->
+    <script type="module">
+        import { database, ref, push } from './firebase-config.js';
 
         const form = document.getElementById('registration-form');
         const messageDiv = document.getElementById('message');
@@ -79,7 +80,9 @@
             const ttl = document.getElementById('birthdate').value;
             const kategori = document.getElementById('category').value;
 
-            firebase.database().ref('peserta/').push({
+            // Save to Firebase Realtime Database
+            const pesertaRef = ref(database, 'peserta/');
+            push(pesertaRef, {
                 nama: nama,
                 jk: jk,
                 tb: tb,
@@ -109,5 +112,3 @@
     </script>
 </body>
 </html>
-
-  
