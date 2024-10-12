@@ -3,33 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="daftar.css">
-    <title>Daftar Akun - AndroMeda Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Daftar - AndroMeda Digital</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="firebase-config.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Daftar Akun</h1>
-    </header>
-
-    <main class="form-container">
-        <form id="register-form">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" required>
+    <div class="register-container">
+        <header class="register-header">
+            <div class="logo">
+                <img src="adm.png" alt="Logo">
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit" class="button">Daftar</button>
-        </form>
-        <button class="back-button" onclick="window.location.href='login.html'">Kembali ke Login</button>
-    </main>
+            <h1>Daftar ke AndroMeda Digital</h1>
+        </header>
 
-    <footer>
-        <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
+        <main>
+            <div class="register-form">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="register-button">Daftar</button>
+                </form>
+                <p>Sudah punya akun? <a href="login.html">Login disini</a></p>
+                <p id="error-message"></p>
+            </div>
+        </main>
+    </div>
+
+    <footer class="register-footer">
+        <p>&copy; 2024 AndroMeda Digital. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Fungsi registrasi menggunakan Firebase
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Registrasi berhasil
+                    alert('Registrasi berhasil!');
+                    window.location.href = 'login.html'; // Redirect ke halaman login
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    document.getElementById('error-message').textContent = errorMessage;
+                });
+        });
+    </script>
 </body>
 </html>
