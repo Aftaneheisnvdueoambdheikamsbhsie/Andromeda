@@ -10,28 +10,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Event listener untuk form login
-const loginForm = document.getElementById('loginForm');
-loginForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // Mencegah form dari refresh
-
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    // Proses login menggunakan Firebase
-    firebase.auth().signInWithEmailAndPassword(username, password)
-        .then((userCredential) => {
-            // Login berhasil
-            const user = userCredential.user;
-            console.log("Login berhasil!", user);
-            // Redirect ke halaman home
-            window.location.href = 'home.html'; // Ganti dengan halaman yang sesuai
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Error login:", errorCode, errorMessage);
-            alert("Login gagal: " + errorMessage); // Tampilkan pesan error
-        });
-});
+const database = firebase.database();
