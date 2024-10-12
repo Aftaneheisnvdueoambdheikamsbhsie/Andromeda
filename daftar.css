@@ -1,25 +1,5 @@
-/* Global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8; /* Warna background yang lembut */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-p {
-    font-size: 14px;
-    color: #666;
-}
+/* Mengimpor gaya global */
+@import url('style.css');
 
 /* Login and Register Container */
 .login-container, .register-container {
