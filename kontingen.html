@@ -7,6 +7,53 @@
     <link rel="stylesheet" href="style.css">
     <!-- Firebase SDK -->
     <script type="module" src="./firebase-config.js"></script>
+    <style>
+        /* Tabel dengan scroll horizontal */
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .red-button, .blue-button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .red-button {
+            background-color: red;
+            color: white;
+            border: none;
+        }
+
+        .blue-button {
+            background-color: lightblue;
+            color: white;
+            border: none;
+        }
+
+        .details-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .details-container table {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,18 +64,39 @@
     </header>
 
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama Kontingen</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="kontingen-table-body">
-                <!-- Data dari Firebase akan ditampilkan di sini -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Kontingen</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="kontingen-table-body">
+                    <!-- Data dari Firebase akan ditampilkan di sini -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="details-container" id="details-container">
+            <h2>Detail Peserta Kontingen</h2>
+            <table id="details-table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tinggi Badan</th>
+                        <th>Berat Badan</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Kategori</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data detail peserta akan ditampilkan di sini -->
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer>
@@ -36,14 +104,13 @@
     </footer>
 
     <script>
-        // Firebase initialization sudah ada di firebase-config.js
-        import { db } from './firebase-config.js'; // Import Firebase db config
-        import { getDocs, collection } from "firebase/firestore";
+        import { db } from './firebase-config.js';
+        import { getDocs, collection, query, where } from "firebase/firestore";
 
         // Fungsi untuk menampilkan data kontingen
         async function fetchKontingenData() {
             const kontingenTableBody = document.getElementById('kontingen-table-body');
-            const kontingenCollection = collection(db, "kontingen"); // Nama koleksi di Firebase
+            const kontingenCollection = collection(db, "kontingen");
 
             const snapshot = await getDocs(kontingenCollection);
             let counter = 1;
@@ -52,7 +119,7 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${counter++}</td>
-                    <td>${data.name}</td>
+                    <td><a href="#" class="kontingen-link" data-id="${doc.id}">${data.name}</a></td>
                     <td>
                         <button class="red-button">Cetak Data</button>
                         <button class="blue-button">Cetak Diagram Jadwal</button>
@@ -60,6 +127,42 @@
                 `;
                 kontingenTableBody.appendChild(row);
             });
+
+            // Tambahkan event listener pada semua link kontingen
+            document.querySelectorAll('.kontingen-link').forEach(link => {
+                link.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    const kontingenId = this.getAttribute('data-id');
+                    showKontingenDetails(kontingenId);
+                });
+            });
+        }
+
+        // Fungsi untuk menampilkan detail kontingen
+        async function showKontingenDetails(kontingenId) {
+            const detailsContainer = document.getElementById('details-container');
+            const detailsTableBody = document.querySelector('#details-table tbody');
+            detailsTableBody.innerHTML = ''; // Kosongkan tabel detail
+
+            const pesertaCollection = collection(db, "peserta");
+            const q = query(pesertaCollection, where("kontingenId", "==", kontingenId));
+
+            const snapshot = await getDocs(q);
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data.name}</td>
+                    <td>${data.gender}</td>
+                    <td>${data.height}</td>
+                    <td>${data.weight}</td>
+                    <td>${data.birthdate}</td>
+                    <td>${data.category}</td>
+                `;
+                detailsTableBody.appendChild(row);
+            });
+
+            detailsContainer.style.display = 'block'; // Tampilkan container detail
         }
 
         // Panggil fungsi saat halaman dimuat
