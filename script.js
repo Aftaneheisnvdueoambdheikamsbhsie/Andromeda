@@ -75,3 +75,51 @@ loginButton.addEventListener('click', (event) => {
         });
 });
 
+// Inisialisasi Firebase (tambahkan kode Firebase Anda di sini)
+
+const form = document.getElementById('registration-form');
+const messageDiv = document.getElementById('message');
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah form dari pengiriman default
+
+    // Ambil data dari form
+    const nama = document.getElementById('name').value;
+    const jk = document.getElementById('gender').value;
+    const tb = document.getElementById('height').value;
+    const bb = document.getElementById('weight').value;
+    const ttl = document.getElementById('birthdate').value;
+    const kategori = document.getElementById('category').value;
+
+    // Simpan data ke Firebase
+    firebase.database().ref('peserta/').push({
+        nama: nama,
+        jk: jk,
+        tb: tb,
+        bb: bb,
+        ttl: ttl,
+        kategori: kategori
+    })
+    .then(() => {
+        // Tampilkan pesan sukses
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = "Data berhasil disimpan! Apakah Anda ingin menginput data lagi? <button id='yes'>Ya</button> <button id='no'>Tidak</button>";
+
+        // Tambahkan event listener untuk tombol "Ya" dan "Tidak"
+        document.getElementById('yes').addEventListener('click', function() {
+            // Reset form untuk input data baru
+            form.reset();
+            messageDiv.style.display = 'none';
+        });
+
+        document.getElementById('no').addEventListener('click', function() {
+            // Redirect ke cekdata.html
+            window.location.href = 'cekdata.html';
+        });
+    })
+    .catch((error) => {
+        console.error("Error saving data: ", error);
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = "Terjadi kesalahan saat menyimpan data.";
+    });
+});
