@@ -56,10 +56,55 @@
         <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="registration.js"></script> <!-- Kode untuk menyimpan data registrasi -->
+    <!-- Script Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0PBtiwbVjUjia1edNbW0UZ0L84rfcLDo",
+            authDomain: "andromediadigital-ddcd0.firebaseapp.com",
+            projectId: "andromediadigital-ddcd0",
+            storageBucket: "andromediadigital-ddcd0.appspot.com",
+            messagingSenderId: "721176765748",
+            appId: "1:721176765748:web:yourAppId" // Ganti dengan appId yang sesuai
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Form submission
+        const form = document.getElementById('registration-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Mencegah form dari pengiriman default
+
+            // Mengambil data dari form
+            const nama = document.getElementById('name').value;
+            const jk = document.getElementById('gender').value;
+            const tb = document.getElementById('height').value;
+            const bb = document.getElementById('weight').value;
+            const ttl = document.getElementById('birthdate').value;
+            const kategori = document.getElementById('category').value;
+
+            // Menyimpan data ke Firestore
+            db.collection("peserta").add({
+                nama: nama,
+                jk: jk,
+                tb: tb,
+                bb: bb,
+                ttl: ttl,
+                kategori: kategori
+            })
+            .then(() => {
+                alert("Pendaftaran berhasil!");
+                form.reset(); // Mengosongkan form setelah pendaftaran
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+                alert("Pendaftaran gagal, silakan coba lagi.");
+            });
+        });
+    </script>
 </body>
 </html>
