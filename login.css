@@ -1,6 +1,5 @@
 /* Mengimpor gaya global */
-@import url('style.css');{
-}
+@import url('style.css');
 /* Login and Register Container */
 .login-container, .register-container {
     background-color: white;
