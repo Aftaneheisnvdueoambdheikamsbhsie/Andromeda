@@ -42,27 +42,6 @@
         <p>&copy; 2024 Pesta Pencak Silat. All rights reserved.</p>
     </footer>
 
-    <script src="fiirebase-config.js"></script>
-    <script>
-        // Mengambil data dari Firebase
-        firebase.database().ref('peserta/').once('value').then((snapshot) => {
-            const dataList = document.getElementById('data-list');
-            snapshot.forEach((childSnapshot) => {
-                const data = childSnapshot.val();
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${data.nama}</td>
-                    <td>${data.jk}</td>
-                    <td>${data.tb}</td>
-                    <td>${data.bb}</td>
-                    <td>${data.ttl}</td>
-                    <td>${data.kategori}</td>
-                `;
-                dataList.appendChild(row);
-            });
-        }).catch((error) => {
-            console.error("Error fetching data: ", error);
-        });
-    </script>
+    <script src="cekdata.js"></script>
 </body>
 </html>
