@@ -49,4 +49,29 @@ document.getElementById("login-form").addEventListener("submit", function (event
         alert("Username atau password salah. Silakan coba lagi.");
     }
 });
+// Ambil elemen tombol dan tambahkan event listener
+const loginButton = document.querySelector('.login-button');
+
+loginButton.addEventListener('click', (event) => {
+    event.preventDefault(); // Mencegah form dari refresh
+
+    const username = document.querySelector('#username').value;
+    const password = document.querySelector('#password').value;
+
+    // Proses login menggunakan Firebase
+    firebase.auth().signInWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+            // Login berhasil
+            const user = userCredential.user;
+            console.log("Login berhasil!", user);
+            // Redirect atau tampilkan halaman baru
+            window.location.href = 'home.html'; // Ganti dengan halaman yang sesuai
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("Error login:", errorCode, errorMessage);
+            alert("Login gagal: " + errorMessage); // Tampilkan pesan error
+        });
+});
 
