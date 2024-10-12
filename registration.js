@@ -1,45 +1,47 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyB0PBtiwbVjUjia1edNbW0UZ0L84rfcLDo",
-    authDomain: "andromediadigital-ddcd0.firebaseapp.com",
-    projectId: "andromediadigital-ddcd0",
-    storageBucket: "andromediadigital-ddcd0.appspot.com",
-    messagingSenderId: "721176765748",
-    appId: "1:721176765748:web:yourAppId" // Ganti dengan appId yang sesuai
-};
+// script.js
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+import { database } from './firebase-config.js'; // Import database dari firebase-config.js
+import { ref, push } from "firebase/database"; // Import ref dan push untuk operasi database
 
-// Inisialisasi Firestore
-const db = firebase.firestore();
+const form = document.getElementById('registration-form');
+const messageDiv = document.getElementById('message');
 
-// Event listener untuk form registrasi
-document.getElementById('registration-form').addEventListener('submit', (event) => {
-    event.preventDefault(); // Mencegah form dari refresh
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const gender = document.getElementById('gender').value;
-    const height = document.getElementById('height').value;
-    const weight = document.getElementById('weight').value;
-    const birthdate = document.getElementById('birthdate').value;
-    const category = document.getElementById('category').value;
+    const nama = document.getElementById('name').value;
+    const jk = document.getElementById('gender').value;
+    const tb = document.getElementById('height').value;
+    const bb = document.getElementById('weight').value;
+    const ttl = document.getElementById('birthdate').value;
+    const kategori = document.getElementById('category').value;
 
-    // Simpan data ke Firestore
-    db.collection("peserta").add({
-        nama: name,
-        jk: gender,
-        tb: height,
-        bb: weight,
-        ttl: birthdate,
-        kategori: category
+    const pesertaRef = ref(database, 'peserta/'); // Referensi ke node 'peserta'
+
+    push(pesertaRef, {
+        nama: nama,
+        jk: jk,
+        tb: tb,
+        bb: bb,
+        ttl: ttl,
+        kategori: kategori
     })
     .then(() => {
-        alert("Registrasi berhasil!");
-        document.getElementById('registration-form').reset(); // Reset form setelah berhasil
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = "Data berhasil disimpan! Apakah Anda ingin menginput data lagi? <button id='yes' class='back-button'>Ya</button> <button id='no' class='check-data-button'>Tidak</button>";
+
+        document.getElementById('yes').addEventListener('click', function() {
+            form.reset();
+            messageDiv.style.display = 'none';
+        });
+
+        document.getElementById('no').addEventListener('click', function() {
+            window.location.href = 'cekdata.html'; // Redirect ke cekdata.html
+        });
     })
     .catch((error) => {
-        console.error("Error adding document: ", error);
-        alert("Registrasi gagal: " + error.message);
+        console.error("Error saving data: ", error);
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = "Terjadi kesalahan saat menyimpan data: " + error.message;
     });
 });
