@@ -53,6 +53,7 @@
         const user = userCredential.user;
         console.log("Login berhasil:", user);
         // Alihkan ke halaman lain jika perlu
+          window.location.href = 'home.html'; // Ganti dengan halaman yang sesuai
     })
     .catch((error) => {
         const errorCode = error.code;
